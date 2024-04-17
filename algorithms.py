@@ -111,3 +111,53 @@ def get_avg_brand_followers(all_handles, brand_name):
                 count += 1
     return count / len_lists
         
+def binary_search(target, arr):
+    low = 0
+    high = len(arr) - 1
+    mid = 0
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return True
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid -1
+    return False
+
+class Graph:
+    def depth_first_search(self, start_vertex):
+        visited = []
+        self.depth_first_search_r(visited, start_vertex)
+        return visited
+
+    def depth_first_search_r(self, visited, current_vertex):
+        visited.append(current_vertex)
+        sorted_neibo = sorted(self.graph[current_vertex])
+        for neibo in sorted_neibo:
+            if neibo not in visited:
+                self.depth_first_search_r(visited, neibo)
+
+        # don't touch below this line
+
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        if u in self.graph.keys():
+            self.graph[u].add(v)
+        else:
+            self.graph[u] = set([v])
+        if v in self.graph.keys():
+            self.graph[v].add(u)
+        else:
+            self.graph[v] = set([u])
+
+    def __repr__(self):
+        result = ""
+        for key in self.graph.keys():
+            result += f"Vertex: '{key}'\n"
+            for v in sorted(self.graph[key]):
+                result += f"has an edge leading to --> {v} \n"
+        return result
+
